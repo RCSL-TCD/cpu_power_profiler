@@ -1,1 +1,1 @@
-# cpu_power_profiler1
+# CPU Power Consumption Profiler for visual processing algorithms
