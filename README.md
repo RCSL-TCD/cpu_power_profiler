@@ -52,33 +52,22 @@ cpu_power_predictor/
 
 ## 🛠️ CLI Options
 
-**`-m`**
-<pre> 
-```note
-● Specifies which power value to estimate.
-● By default, it estimates the average power consumption of the profiled task. You could specify 
--m min
--m max
--m all 
-to estimate the minimum, peak power consumption and all values (mix, max and average).
-</pre>
 
--a
-<pre>
-```note
-● Specifies the application/task’s executable that needs to be profiled.
-● Note that full path to the application should be provided here. 
-● python cpu_profiler -a C:\Nuke\Nuke15.0v4\Nuke.exe  
-</pre>
 
--c
-<pre>
-```note
-●  Points to an already existing Vtune profiled data from which power consumption data needs to be estimated.
-●  Full path to the extracted data file  should be provided.
-●  In this case, the tool ignores the -a switch if specified
+| Option | Description |
+|--------|-------------|
+| `-m`   | Specifies which power value to estimate. <br> By default, it estimates the average power consumption of the profiled task. <br>You can specify:<br>• `-m min`<br>• `-m peak`<br>• `-m all`<br>to estimate the minimum, peak, and average power values. |
+| `-a`   | Specifies the application/task’s executable that needs to be profiled.<br>  Provide the **full path** to the application.<br> Example:<br>`python cpu_profiler -a C:\Nuke\Nuke15.0v4\Nuke.exe` |
+| `-c`   | Points to a previously generated VTune `.csv` file for power estimation. <br> Full path to the extracted data should be provided.<br> When this is used, the `-a` switch is ignored.<br>Example:<br>`python cpu_profiler -c /usr/local/Vtune_profiled.csv` |
 
-python cpu_profiler -c /usr/local/Vtune_profiled.csv 
+
+
+
+
+
+
+
+
 
 </pre>
 
