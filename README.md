@@ -35,7 +35,7 @@ pip install .
 The resulting file structure should be as shown below.
 
 ```
-cpu_power_predictor/
+cpu_power_profiler/
 ├── predictor/                   # Package containing logic and model files
 │   ├── __init__.py
 │   ├── l2_extractor.py
