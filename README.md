@@ -106,7 +106,7 @@ cpu_profiler -m min
 </pre>
 
 <pre>
-cpu_profiler -m min  
+cpu_profiler -m peak
 </pre>
 
 <pre>
