@@ -1,0 +1,45 @@
+import sys
+import os
+import argparse
+import joblib
+from predictor.l2_extractor import process_file
+
+def predict_power(csv_file, mode):
+    model_files = {
+        'avg': ('cpu_power_model_avg.joblib', 'AVG'),
+        'min': ('cpu_power_model_min.joblib', 'MIN'),
+        'peak': ('cpu_power_model_peak.joblib', 'PEAK')
+    }
+
+    l2_df = process_file(csv_file, 1)
+    selected_features = [
+        'CPU Time', 'Clockticks', 'Instructions Retired',
+        'CPI Rate', 'Back-End Bound', 'Average CPU Frequency'
+    ]
+    features = l2_df[selected_features]
+
+    if mode == 'all':
+        for key, (model_file, label) in model_files.items():
+            model_path = os.path.join(os.path.dirname(__file__), model_file)
+            model = joblib.load(model_path)
+            prediction = model.predict(features)[0]
+            print(f"🔋 Predicted {label} Power: {prediction:.2f} watts")
+    elif mode in model_files:
+        model_file, label = model_files[mode]
+        model_path = os.path.join(os.path.dirname(__file__), model_file)
+        model = joblib.load(model_path)
+        prediction = model.predict(features)[0]
+        print(f"🔋 Predicted {label} Power: {prediction:.2f} watts")
+    else:
+        print("Invalid mode. Choose from: avg, min, peak, all.")
+
+def main():
+    parser = argparse.ArgumentParser(description='Predict CPU Power Consumption')
+    parser.add_argument('-m', '--mode', choices=['avg', 'min', 'peak', 'all'], required=True, help='Power prediction mode')
+    parser.add_argument('csv_file', help='Input CSV file with CPU metrics')
+    args = parser.parse_args()
+
+    predict_power(args.csv_file, args.mode)
+
+if __name__ == '__main__':
+    main()
