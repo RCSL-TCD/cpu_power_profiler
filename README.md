@@ -83,15 +83,15 @@ In the simplest form, both steps are fully automated and handled by the API. The
 Examples:  
 
 <pre>
-cpu_profiler -m min -a "C:\Program Files\Nuke15.0v4\Nuke15.0.exe  
+cpu_profiler -m min -a "C:\Program Files\Nuke15.0v4\Nuke15.0.exe"   
 </pre>
 
 <pre>
-cpu_profiler -m peak -a "C:\Program Files\Nuke15.0v4\Nuke15.0.exe
+cpu_profiler -m peak -a "C:\Program Files\Nuke15.0v4\Nuke15.0.exe" 
 </pre>
 
 <pre>
-cpu_profiler -m all  -a "C:\Program Files\Nuke15.0v4\Nuke15.0.exe 
+cpu_profiler -m all  -a "C:\Program Files\Nuke15.0v4\Nuke15.0.exe" 
 </pre>
 
 Note that the above cases use Windows as the host OS. 
