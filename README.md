@@ -56,7 +56,7 @@ cpu_power_profiler/
 
 | Option | Description |
 |--------|-------------|
-| `-m`   | Specifies which power value to estimate. <br> By default, it estimates the average power consumption of the profiled task. <br>You can specify:<br>• `-m min`<br>• `-m peak`<br>• `-m all`<br>to estimate the minimum, peak, and average power values. |
+| `-m`   | Specifies which power value to estimate. <br> By default, it estimates the average power consumption of the profiled task. <br>You can specify:<br>• `-m min`<br>• `-m avg`<br>• `-m peak`<br>• `-m all`<br>to estimate the minimum, peak, and average power values. |
 | `-a`   | Specifies the application/task’s executable that needs to be profiled.<br>  Provide the **full path** to the application.<br> Example:<br>`python cpu_profiler -a C:\Nuke\Nuke15.0v4\Nuke.exe` |
 | `-c`   | Points to a previously generated VTune `.csv` file for power estimation. <br> Full path to the extracted data should be provided.<br> When this is used, the `-a` switch is ignored.<br>Example:<br>`python cpu_profiler -c /usr/local/Vtune_profiled.csv` |
 
@@ -87,6 +87,10 @@ cpu_profiler -m min -a "C:\Program Files\Nuke15.0v4\Nuke15.0.exe"
 </pre>
 
 <pre>
+cpu_profiler -m avg -a "C:\Program Files\Nuke15.0v4\Nuke15.0.exe"   
+</pre>
+
+<pre>
 cpu_profiler -m peak -a "C:\Program Files\Nuke15.0v4\Nuke15.0.exe" 
 </pre>
 
@@ -103,6 +107,10 @@ This option can be exercised if the profiling of the tool has already been compl
 Examples
 <pre>
 cpu_profiler -m min  
+</pre>
+
+<pre>
+cpu_profiler -m avg  
 </pre>
 
 <pre>
