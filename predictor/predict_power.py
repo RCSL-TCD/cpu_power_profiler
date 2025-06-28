@@ -4,7 +4,7 @@ import argparse
 import joblib
 from predictor.l2_extractor import process_file
 
-def predict_power(csv_file, mode):
+def predict_power(csv_file, mode, logger):
     model_files = {
         'avg': ('cpu_power_model_avg.joblib', 'AVG'),
         'min': ('cpu_power_model_min.joblib', 'MIN'),
@@ -17,21 +17,25 @@ def predict_power(csv_file, mode):
         'CPI Rate', 'Back-End Bound', 'Average CPU Frequency'
     ]
     features = l2_df[selected_features]
+    prediction_result = {}
 
     if mode == 'all':
         for key, (model_file, label) in model_files.items():
             model_path = os.path.join(os.path.dirname(__file__), model_file)
             model = joblib.load(model_path)
             prediction = model.predict(features)[0]
-            print(f"🔋 Predicted {label} Power: {prediction:.2f} watts")
+            prediction_result[label] = prediction
+            logger.info(f"🔋 Predicted {label} Power: {prediction:.2f} watts")
     elif mode in model_files:
         model_file, label = model_files[mode]
         model_path = os.path.join(os.path.dirname(__file__), model_file)
         model = joblib.load(model_path)
         prediction = model.predict(features)[0]
-        print(f"🔋 Predicted {label} Power: {prediction:.2f} watts")
+        prediction_result = {label: prediction}
+        logger.info(f"🔋 Predicted {label} Power: {prediction:.2f} watts")
     else:
-        print("Invalid mode. Choose from: avg, min, peak, all.")
+        logger.error("Invalid mode. Choose from: avg, min, peak, all.")
+    return prediction_result
 
 def main():
     parser = argparse.ArgumentParser(description='Predict CPU Power Consumption')
