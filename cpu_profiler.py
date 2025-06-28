@@ -4,7 +4,9 @@ import argparse
 import subprocess
 from predictor.convert_save_command import convert_save_command, export_csv, convert_csv_format
 from predictor.predict_power import predict_power
+from predictor.rapl_energy import measure_energy_stats
 from loguru import logger
+
 
 logger.remove()
 log_level = "DEBUG"
@@ -64,7 +66,7 @@ def main():
     parser.add_argument('-o', '--output-dir',
         default='vtune_results_uarch',
         help='Directory to save VTune results and generated CSVs. Default: vtune_results_uarch')
-
+    parser.add_argument('--rapl', action='store_true', help='Measure energy statistics using pyRAPL')
     parser.add_argument('--log-level', default='INFO', help='Set the logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL)')
     
     
@@ -76,6 +78,7 @@ def main():
         converted_csv_path = run_convert(args, logger)
         prediction_result = run_predict(converted_csv_path, args.mode, logger)
         logger.info("Prediction results: {}", prediction_result)
+        print("Y")
     elif args.csv:
         #run_predict(args.mode, os.path.abspath(args.csv))
         prediction_result = run_predict(os.path.abspath(args.csv), args.mode, logger)
@@ -83,5 +86,20 @@ def main():
     else:
         run_predict(args.mode, default_csv)
 
+    # Measure energy statistics with pyRAPL
+    if args.rapl:
+        energy_results = measure_energy_stats(args.app, num_runs=5)
+        if energy_results:
+            print("\n--- RAPL Energy Analysis Results ---")
+            print(f"Statistics from {energy_results['successful_runs']} successful runs:")
+            print(f"  Energy (Package):")
+            print(f"    - Average: {energy_results['avg_energy_uj']:,.2f} µJ")
+            print(f"    - Min:     {energy_results['min_energy_uj']:,.2f} µJ")
+            print(f"    - Max:     {energy_results['max_energy_uj']:,.2f} µJ")
+            print(f"  Power (Package):")
+            print(f"    - Average: {energy_results['avg_power_w']:.2f} W")
+            print(f"    - Min:     {energy_results['min_power_w']:.2f} W")
+            print(f"    - Max:     {energy_results['max_power_w']:.2f} W")
+            print("------------------------------------")
 if __name__ == "__main__":
     main()
