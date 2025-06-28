@@ -28,7 +28,19 @@ cd cpu_power_profiler
 pip install . 
 </pre>
 
+### Linux Users
+For linux, you might need to do few kernel tweaks to enable perf profiling, this
+includes initialising vtunes CLI to the path via `setvars.sh`. The default path
+when isntalled via apt is at `/opt/intel/oneapi/setvars.sh`.
 
+`source /opt/intel/oneapi/setvars.sh`
+
+For the enabling the perf, you have to adjust some kernel settings, to temporory
+do them, please do the following, you can do it via systemwide
+```bash
+sudo sh -c "echo 0 > /proc/sys/kernel/kptr_restrict"
+sudo sh -c "echo 0 > /proc/sys/kernel/perf_event_paranoid "
+```
 
 ## 📦 File Structure
 
