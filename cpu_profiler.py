@@ -68,8 +68,8 @@ def main():
         help='Directory to save VTune results and generated CSVs. Default: vtune_results_uarch')
     parser.add_argument('--rapl', action='store_true', help='Measure energy statistics using pyRAPL')
     parser.add_argument('--log-level', default='INFO', help='Set the logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL)')
-    
-    
+
+
     args = parser.parse_args()
 
     default_csv = os.path.abspath("transformed_vtune_output.csv")
@@ -78,7 +78,6 @@ def main():
         converted_csv_path = run_convert(args, logger)
         prediction_result = run_predict(converted_csv_path, args.mode, logger)
         logger.info("Prediction results: {}", prediction_result)
-        print("Y")
     elif args.csv:
         #run_predict(args.mode, os.path.abspath(args.csv))
         prediction_result = run_predict(os.path.abspath(args.csv), args.mode, logger)
@@ -101,5 +100,33 @@ def main():
             print(f"    - Min:     {energy_results['min_power_w']:.2f} W")
             print(f"    - Max:     {energy_results['max_power_w']:.2f} W")
             print("------------------------------------")
+
+    # Save results to a CSV file
+    import datetime
+    now = datetime.datetime.now()
+    date_and_time = now.isoformat()
+    full_csv_path = os.path.join(args.output_dir, "full_results.csv")
+    with open(full_csv_path, 'w', newline='') as csvfile:
+        import csv
+        fieldnames = [
+            'date_and_time', 'ml_power_avg', 'ml_power_min', 'ml_power_peak',
+            'rapl_energy_uj_avg', 'rapl_energy_uj_min', 'rapl_energy_uj_max',
+            'rapl_power_avg', 'rapl_power_min', 'rapl_power_peak', "cli_app_command"
+        ]
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerow({
+            'date_and_time': date_and_time,
+            'ml_power_avg': prediction_result.get('AVG', None),
+            'ml_power_min': prediction_result.get('MIN', None),
+            'ml_power_peak': prediction_result.get('PEAK', None),
+            'rapl_energy_uj_avg': energy_results['avg_energy_uj'] if args.rapl else None,
+            'rapl_energy_uj_min': energy_results['min_energy_uj'] if args.rapl else None,
+            'rapl_energy_uj_max': energy_results['max_energy_uj'] if args.rapl else None,
+            'rapl_power_avg': energy_results['avg_power_w'] if args.rapl else None,
+            'rapl_power_min': energy_results['min_power_w'] if args.rapl else None,
+            'rapl_power_peak': energy_results['max_power_w'] if args.rapl else None,
+            "cli_app_command": args.app if args.app else "N/A"
+        })
 if __name__ == "__main__":
     main()
