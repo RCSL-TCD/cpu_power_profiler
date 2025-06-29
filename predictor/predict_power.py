@@ -4,6 +4,7 @@ import argparse
 import joblib
 from predictor.l2_extractor import process_file
 
+
 def predict_power(csv_file, mode, logger):
     model_files = {
         'avg': ('cpu_power_model_avg.joblib', 'AVG'),
@@ -37,13 +38,17 @@ def predict_power(csv_file, mode, logger):
         logger.error("Invalid mode. Choose from: avg, min, peak, all.")
     return prediction_result
 
+
 def main():
-    parser = argparse.ArgumentParser(description='Predict CPU Power Consumption')
-    parser.add_argument('-m', '--mode', choices=['avg', 'min', 'peak', 'all'], required=True, help='Power prediction mode')
+    parser = argparse.ArgumentParser(
+        description='Predict CPU Power Consumption')
+    parser.add_argument(
+        '-m', '--mode', choices=['avg', 'min', 'peak', 'all'], required=True, help='Power prediction mode')
     parser.add_argument('csv_file', help='Input CSV file with CPU metrics')
     args = parser.parse_args()
 
     predict_power(args.csv_file, args.mode)
+
 
 if __name__ == '__main__':
     main()
