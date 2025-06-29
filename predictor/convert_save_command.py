@@ -39,7 +39,8 @@ def convert_save_command(result_dir, app_path, vtune_cli, working_dir, headless_
             vtune_cli,
             "-collect", "uarch-exploration",
             "-result-dir", result_dir,
-            "-follow-child",
+            "-follow-child", "-no-summary",
+            "-quiet",
             "-app-working-dir", os.getcwd(),
         ] + app_command_list
         logger.info(
