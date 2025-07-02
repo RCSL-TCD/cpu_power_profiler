@@ -35,14 +35,14 @@ def run_convert(args, logger):
     converted_csv = os.path.join(result_dir, "transformed_vtune_output.csv")
     headless_mode = args.headless
     app_cmd = args.app if headless_mode else None
+    script_path = args.script if hasattr(args, 'script') else None
     # Check if it is windows or Linux and set the VTune CLI path accordingly
     if sys.platform.startswith('win'):
         vtune_cli = r"C:\Program Files (x86)\Intel\oneAPI\vtune\2024.1\bin64\vtune.exe"
     elif sys.platform.startswith('linux'):
         vtune_cli = '/opt/intel/oneapi/vtune/2025.4/bin64/vtune'
 
-    convert_save_command(result_dir, app_path, vtune_cli,
-                         working_dir, headless_mode, app_cmd, logger)
+    convert_save_command(result_dir, app_path, vtune_cli, working_dir, headless_mode, app_cmd, logger, script_path)
     logger.info(
         f"VTune profiling completed, exporting results to CSV: {result_dir}")
 #    print(f"[INFO] VTune results will be saved in: {result_dir}")
@@ -80,6 +80,7 @@ def main():
                         help='Measure energy statistics using pyRAPL')
     parser.add_argument('--log-level', default='INFO',
                         help='Set the logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL)')
+    parser.add_argument('-s', '--script', help='Optional script file (.nk) to open with the application')
 
     args = parser.parse_args()
 
