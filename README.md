@@ -110,8 +110,11 @@ cpu_profiler -m peak -a "C:\Program Files\Nuke15.0v4\Nuke15.0.exe"
 <pre>
 cpu_profiler -m all  -a "C:\Program Files\Nuke15.0v4\Nuke15.0.exe" 
 </pre>
+
+<pre>
 cpu_profiler -m all -a "C:\Program Files\Nuke15.0v4\Nuke15.0.exe"  -s  "D:/nuke_graphs/blur_image.nk"
 </pre>
+
 Note that the above cases use Windows as the host OS. 
 
 (b) Semi-manual/manual Mode
