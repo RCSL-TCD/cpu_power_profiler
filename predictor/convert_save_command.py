@@ -62,7 +62,7 @@ def convert_save_command(result_dir, app_path, vtune_cli, working_dir, headless_
         logger.info(
             f"Running VTune in interactive mode with command: {' '.join(cmd_collect)}")
         proc = subprocess.Popen(cmd_collect)
-        time.sleep(20)  # Adjust as needed for profiling duration
+        time.sleep(120)  # Adjust as needed for profiling duration
         # --- Stop VTune ---
         logger.info("Stopping VTune...")
         subprocess.run([vtune_cli, "-r", result_dir,
