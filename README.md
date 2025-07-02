@@ -28,7 +28,7 @@ cd cpu_power_profiler
 pip install . 
 </pre>
 
-### Linux Users
+## 🐧 Linux Users
 For linux, you might need to do few kernel tweaks to enable perf profiling, this
 includes initialising vtunes CLI to the path via `setvars.sh`. The default path
 when isntalled via apt is at `/opt/intel/oneapi/setvars.sh`.
@@ -41,7 +41,7 @@ do them, please do the following, you can do it via systemwide
 sudo sh -c "echo 0 > /proc/sys/kernel/kptr_restrict"
 sudo sh -c "echo 0 > /proc/sys/kernel/perf_event_paranoid "
 ```
-
+--rapl is suppo
 ## 📦 File Structure
 
 The resulting file structure should be as shown below.
@@ -71,7 +71,7 @@ cpu_power_profiler/
 | `-m`   | Specifies which power value to estimate. <br> By default, it estimates the average power consumption of the profiled task. <br>You can specify:<br>• `-m min`<br>• `-m avg`<br>• `-m peak`<br>• `-m all`<br>to estimate the minimum, peak, and average power values. |
 | `-a`   | Specifies the application/task’s executable that needs to be profiled.<br>  Provide the **full path** to the application.<br> Example:<br>`python cpu_profiler -a C:\Nuke\Nuke15.0v4\Nuke.exe` |
 | `-c`   | Points to a previously generated VTune `.csv` file for power estimation. <br> Full path to the extracted data should be provided.<br> When this is used, the `-a` switch is ignored.<br>Example:<br>`python cpu_profiler -c /usr/local/Vtune_profiled.csv` |
-| `-s`   | Load the Nuke script from the specified location. <br> Example:<br>`cpu_profiler -m all -a "C:\Program Files\Nuke15.0v4\Nuke15.0.exe"  -s  "cpu_profiler -m all -a "C:\Program Files\Nuke15.0v4\Nuke15.0.exe"  -s  "D:/nuke_graphs/blur_image.nk""` |
+| `-s`   | Passes argument to the tool under investigation.<br> For e.g., to load Nuke script to be profiled,<br> -s can be used to point to the location of .nk . <br> Example:<br>cpu_profiler -m all -a "c:\Program Files\Nuke15.0v4\Nuke15.0.exe"  -s  "D:/nuke_graphs/blur_image.nk" |
 
 
 
