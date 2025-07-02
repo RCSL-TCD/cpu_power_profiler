@@ -5,7 +5,7 @@ setup(
     version='1.1',
     py_modules=["cpu_profiler"],  # Ensures cpu_profiler.py is installed as a module
     packages=find_packages(),
-    install_requires=['pandas', 'scikit-learn', 'joblib', 'openpyxl', 'py-cpuinfo'],
+    install_requires=['pandas', 'scikit-learn', 'joblib', 'openpyxl', 'py-cpuinfo','loguru','pymongo','pyRAPL'],
     include_package_data=True,
     package_data={
         'predictor': [
