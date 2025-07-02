@@ -41,7 +41,7 @@ do them, please do the following, you can do it via systemwide
 sudo sh -c "echo 0 > /proc/sys/kernel/kptr_restrict"
 sudo sh -c "echo 0 > /proc/sys/kernel/perf_event_paranoid "
 ```
---rapl is suppo
+
 ## 📦 File Structure
 
 The resulting file structure should be as shown below.
