@@ -16,7 +16,7 @@ def get_cpu_brand():
         return "Could not determine CPU brand"
 
 
-def convert_save_command(result_dir, app_path, vtune_cli, working_dir, headless_mode, app_cmd, logger):
+def convert_save_command(result_dir, app_path, vtune_cli, working_dir, headless_mode, app_cmd, logger, script_path=None):
     """
     Run the convert_save_command.py script to process the application path.
     """
@@ -53,11 +53,16 @@ def convert_save_command(result_dir, app_path, vtune_cli, working_dir, headless_
             vtune_cli,
             "-collect", "uarch-exploration", "-result-dir", result_dir,
             "-follow-child", "-app-working-dir", working_dir, "--", app_path
-        ]
+           ]
+
+        
+        if script_path:
+            cmd_collect.append(script_path)
+
         logger.info(
             f"Running VTune in interactive mode with command: {' '.join(cmd_collect)}")
         proc = subprocess.Popen(cmd_collect)
-        time.sleep(120)  # Adjust as needed for profiling duration
+        time.sleep(20)  # Adjust as needed for profiling duration
         # --- Stop VTune ---
         logger.info("Stopping VTune...")
         subprocess.run([vtune_cli, "-r", result_dir,
