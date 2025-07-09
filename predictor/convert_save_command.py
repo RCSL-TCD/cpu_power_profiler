@@ -30,30 +30,35 @@ def convert_save_command(result_dir, app_path, vtune_cli, working_dir, headless_
         cmd_collect = [
             vtune_cli,
             "-collect", "uarch-exploration",
+            "-data-limit", "0",  # Unlimited result size
             "-result-dir", result_dir,
             "-follow-child", "-no-summary",
             "-quiet",
             "-app-working-dir", os.getcwd(),
         ] + app_command_list
+
         logger.info(f"Running VTune in headless mode with command: {' '.join(cmd_collect)}")
-        proc = subprocess.run(cmd_collect, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)  
+        proc = subprocess.run(cmd_collect, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         logger.info(f"VTune profiling completed with return code: {proc.returncode}")
     else:
         cmd_collect = [
             vtune_cli,
-            "-collect", "uarch-exploration", "-result-dir", result_dir,
-            "-follow-child", "-app-working-dir", working_dir, "--", app_path
+            "-collect", "uarch-exploration",
+            "-result-dir", result_dir,
+            "-follow-child",
+            "-app-working-dir", working_dir,
+            "--", app_path
         ]
 
         if script_path:
             cmd_collect.append(script_path)
 
         logger.info(f"Running VTune in interactive mode with command: {' '.join(cmd_collect)}")
-        proc = subprocess.Popen(cmd_collect, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)  
+        proc = subprocess.Popen(cmd_collect, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         time.sleep(120)
         logger.info("Stopping VTune...")
         subprocess.run([vtune_cli, "-r", result_dir, "-command", "stop"],
-                       check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)  
+                       check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         proc.wait()
         logger.info(f"VTune profiling completed with return code: {proc.returncode}")
         time.sleep(60)
@@ -64,7 +69,7 @@ def export_csv(result_dir, vtune_cli, report_csv, logger):
     subprocess.run([
         vtune_cli, "-report", "hotspots", "-result-dir", result_dir,
         "-group-by", "function", "-format", "csv", "-report-output", report_csv
-    ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)  # 
+    ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     logger.info(f"VTune report exported to CSV: {report_csv}")
 
 
