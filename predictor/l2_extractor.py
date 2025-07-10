@@ -4,18 +4,19 @@ import glob
 import os
 import re
 
-# Global maximum values for each feature (used for normalization)
+# Updated global maximum values for normalization
 global_max = {
-    'CPU Time': 75.4814,
-    'Clockticks': 349650000000,
-    'Instructions Retired': 212380000000,
-    'CPI Rate': 58.0,
-    'Retiring': 1.0,
-    'Front-End Bound': 1.0,
-    'Bad Speculation': 1.0,
-    'Back-End Bound': 1.0,
-    'Average CPU Frequency': 29568100000.0,
+    'CPU Time': 238.069668,
+    'Clockticks': 1115309500000,
+    'Instructions Retired': 2048871300000,
+    'CPI Rate': 362.0,
+    'Retiring': 100.0,
+    'Front-End Bound': 100.0,
+    'Bad Speculation': 100.0,
+    'Back-End Bound': 1908.582782,
+    'Average CPU Frequency': 125664372130.0,
 }
+
 
 # Use environment variables for paths
 base_path = os.getenv("DATA_DIR", "./data")
