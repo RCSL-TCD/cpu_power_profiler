@@ -14,9 +14,17 @@ def predict_power(csv_file, mode, logger):
 
     l2_df = process_file(csv_file, 1)
     selected_features = [
-        'CPU Time', 'Clockticks', 'Instructions Retired',
-        'CPI Rate', 'Back-End Bound', 'Average CPU Frequency'
-    ]
+    'CPU Time',
+    'Clockticks',
+    'Instructions Retired',
+    'CPI Rate',
+    'Retiring',
+    'Front-End Bound',
+    'Bad Speculation',
+    'Back-End Bound',
+    'Average CPU Frequency'
+]
+
     features = l2_df[selected_features]
     prediction_result = {}
 
