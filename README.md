@@ -44,7 +44,7 @@ sudo sh -c "echo 0 > /proc/sys/kernel/perf_event_paranoid "
 ```
 ## Specifiacally for Rocky 9 Linux users. 
 
-●  Nuke — the VFX and film editing software from Foundry — versions 15 and 16 are supported only on Rocky 9 (64-bit), Windows 11 (64-bit), and macOS. Rocky 9 (64-bit), Windows 11 (64-bit) and MacOS (Not supported by Intel® VTune™ Profiler, and therefore also not supported by the CPU Profiler tool.).
+●  Nuke — the VFX and film editing software from Foundry — versions 15 and 16 are supported only on Rocky 9 (64-bit), Windows 11 (64-bit), and macOS(Not supported by Intel® VTune™ Profiler, and therefore also not supported by the CPU Profiler tool).
 
 ● For Rocky 9 users, the Intel® oneAPI toolkit  2024 release is recommended, as the 2025 version has reported bugs that affect certain analyses—such as hotspot and microarchitecture analysis—on some CPUs, including the Intel(R) Core(TM) i9-10900KF. 
 
