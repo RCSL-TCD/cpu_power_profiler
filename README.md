@@ -6,8 +6,9 @@ This CLI interface can be invoked from bash to invoke the application whose ener
 
 **Key requirements and notes about the tool are as below:** <br>
 ● Supported OS: Windows, Linux <br>
-● Intel® VTune™ Profiler must be pre-installed. <br>
+● Intel® oneAPI toolkit must be pre-installed. <br>
 ● You can download it from: https://www.intel.com/content/www/us/en/developer/tools/oneapi/vtune-profiler-download.html <br>
+● Intel® VTune™ Profiler is the part of  Intel® oneAPI toolkit. <br>
 ● Currently tested on Intel’s commercial CPUs, but the model could be adapted to any modern Intel processor-based system. <br>
 ● Python version 3.x
 
@@ -41,7 +42,25 @@ do them, please do the following, you can do it via systemwide
 sudo sh -c "echo 0 > /proc/sys/kernel/kptr_restrict"
 sudo sh -c "echo 0 > /proc/sys/kernel/perf_event_paranoid "
 ```
+## Specifiacally for Rocky 9 Linux users. 
 
+●  Nuke — the VFX and film editing software from Foundry — versions 15 and 16 are supported only on Rocky 9 (64-bit), Windows 11 (64-bit), and macOS. Rocky 9 (64-bit), Windows 11 (64-bit) and MacOS (Not supported by Intel® VTune™ Profiler, and therefore also not supported by the CPU Profiler tool.).
+
+● For Rocky 9 users, the Intel® oneAPI toolkit  2024 release is recommended, as the 2025 version has reported bugs that affect certain analyses—such as hotspot and microarchitecture analysis—on some CPUs, including the Intel(R) Core(TM) i9-10900KF. 
+
+● You can download it from:  https://registrationcenter-download.intel.com/akdlm/IRC_NAS/20f4e6a1-6b0b-4752-b8c1-e5eacba10e01/l_BaseKit_p_2024.0.0.49564_offline.sh 
+
+
+● For deeper hardware events (hotspot and Micro architecture analysis), you may need to install VTune sampling drivers as below:  
+
+```bash
+cd /opt/intel/oneapi/vtune/2024.0/sepdk/src
+./build-driver
+./insmod-sep -r
+```
+Verify it’s running
+
+`lsmod | grep sep`
 ## 📦 File Structure
 
 The resulting file structure should be as shown below.
