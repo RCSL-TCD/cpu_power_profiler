@@ -42,7 +42,7 @@ do them, please do the following, you can do it via systemwide
 sudo sh -c "echo 0 > /proc/sys/kernel/kptr_restrict"
 sudo sh -c "echo 0 > /proc/sys/kernel/perf_event_paranoid "
 ```
-## Specifiacally for Rocky 9 Linux users. 
+## Specifiacally for Rocky 9  and Rocky Linux 8 Linux users. 
 
 ●  Nuke — the VFX and film editing software from Foundry — versions 15 and 16 are supported only on Rocky 9 (64-bit), Windows 11 (64-bit), and macOS(Not supported by Intel® VTune™ Profiler, and therefore also not supported by the CPU Profiler tool).
 
@@ -61,6 +61,40 @@ cd /opt/intel/oneapi/vtune/2024.0/sepdk/src
 Verify it’s running
 
 `lsmod | grep sep`
+
+
+## 🔄  Working with Rocky Linux 8
+
+Upgrade default python version
+<pre> 
+sudo dnf module reset python36
+sudo dnf module enable python39 
+</pre>
+
+<pre> 
+sudo dnf install python39 python39-devel python39-pip gcc gcc-c++ make pkgconfig 
+</pre>
+
+Upgrade pip 
+
+<pre> 
+python -m pip install --upgrade pip 
+</pre>
+
+
+## 🔄  Nuke 15 tweaks for Rocky Linux 8
+
+While browsing folders through Nuke, Home directories are not visible when Nuke is launched as root.
+
+<pre> 
+cd /home/USER_NAME
+export HOME=/home/USER_NAME
+export USER=USER_NAME
+export LOGNAME=USER_NAME
+</pre>   
+
+
+
 ## 📦 File Structure
 
 The resulting file structure should be as shown below.
@@ -156,16 +190,5 @@ cpu_profiler -m peak
 <pre>
 cpu_profiler -m all -c &lt;path\to\.csv\file.csv&gt;
 </pre>
-
-
-
-
-
-
-
-
-
-
-
 
 
